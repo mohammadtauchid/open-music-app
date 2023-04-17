@@ -4,13 +4,16 @@ import jwtDecode from 'jwt-decode';
 import styles from './HeadBar.module.scss';
 import fetcher from '../../../lib/utils/fetcher';
 import { getBaseURL } from '../../../lib/utils/storage';
+import HamburgerMenu from '../HamburgerMenu';
 
 class HeadBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       user: null,
+      isOpen: false,
     };
+    this.toggleMenu = this.toggleMenu.bind(this);
   }
 
   async componentDidMount() {
@@ -26,10 +29,17 @@ class HeadBar extends Component {
     }
   }
 
+  toggleMenu() {
+    this.setState((prevState) => ({ ...prevState, isOpen: !prevState.isOpen }));
+  }
+
   render() {
-    const { user } = this.state;
+    const { user, isOpen } = this.state;
     return (
       <header className={styles.head_bar}>
+        <div className={styles.menu_wrapper}>
+          <HamburgerMenu isOpen={isOpen} toggleMenu={this.toggleMenu} />
+        </div>
         <h1>
           <a href="/">
             { process.env.NEXT_PUBLIC_APP_NAME || 'Music' }
