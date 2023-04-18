@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import React, { Component } from 'react';
+import HeadBar from '../../../components/Common/HeadBar';
 import AuthenticationError from '../../../lib/utils/AuthenticationError';
 import { fetchWithAuthentication } from '../../../lib/utils/fetcher';
 import getBaseURL from '../../../lib/utils/storage';
@@ -119,43 +120,46 @@ class Edit extends Component {
     }
 
     return (
-      <div className={styles.edit_song}>
-        <h1>Edit Song</h1>
-        <form onSubmit={this.handleSubmit}>
-          <label htmlFor="title">
-            Title
-            <input type="text" name="title" value={title} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="performer">
-            Performer
-            <input type="text" name="performer" value={performer} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="year">
-            Year
-            <input type="text" name="year" value={year} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="genre">
-            Genre
-            <input type="text" name="genre" value={genre} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="duration">
-            Duration
-            <input type="text" name="duration" value={duration} onChange={this.handleInputChange} />
-          </label>
-          <label htmlFor="albumId" className={styles.select_wrapper}>
-            Album
-            <select name="albumId" value={album} onChange={this.handleInputChange}>
-              <option value="">...</option>
-              {albums.map((a) => (
-                <option key={a.id} value={a.name} selected={a.id === aid}>
-                  {a.name}
-                </option>
-              ))}
-            </select>
-          </label>
-          <button type="submit">Edit Song</button>
-          {error && <p className={styles.error_message}>{error}</p>}
-        </form>
+      <div>
+        <HeadBar />
+        <div className={styles.edit_song}>
+          <h1>Edit Song</h1>
+          <form onSubmit={this.handleSubmit}>
+            <label htmlFor="title">
+              Title
+              <input type="text" name="title" value={title} onChange={this.handleInputChange} />
+            </label>
+            <label htmlFor="performer">
+              Performer
+              <input type="text" name="performer" value={performer} onChange={this.handleInputChange} />
+            </label>
+            <label htmlFor="year">
+              Year
+              <input type="text" name="year" value={year} onChange={this.handleInputChange} />
+            </label>
+            <label htmlFor="genre">
+              Genre
+              <input type="text" name="genre" value={genre} onChange={this.handleInputChange} />
+            </label>
+            <label htmlFor="duration">
+              Duration
+              <input type="text" name="duration" value={duration} onChange={this.handleInputChange} />
+            </label>
+            <label htmlFor="albumId" className={styles.select_wrapper}>
+              Album
+              <select name="albumId" value={album} onChange={this.handleInputChange}>
+                <option value="">...</option>
+                {albums.map((a) => (
+                  <option key={a.id} value={a.name} selected={a.id === aid}>
+                    {a.name}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <button type="submit">Edit Song</button>
+            {error && <p className={styles.error_message}>{error}</p>}
+          </form>
+        </div>
       </div>
     );
   }
