@@ -53,7 +53,6 @@ class Edit extends Component {
 
     if (name === 'albumId') {
       const selectedAlbum = albums.find((album) => album.name === value);
-      console.log(selectedAlbum);
 
       if (selectedAlbum) {
         this.setState({ [name]: selectedAlbum.id });
@@ -101,7 +100,7 @@ class Edit extends Component {
         return;
       }
 
-      console.error('Error adding song:', error);
+      console.error('Error updating song:', error);
       this.setState({ error: error.message });
     }
   }
@@ -110,6 +109,8 @@ class Edit extends Component {
     const {
       title, performer, year, genre, duration, album, albums, error, accessToken,
     } = this.state;
+
+    const { album_id: aid } = this.state;
 
     if (!accessToken) {
       return (
@@ -146,7 +147,7 @@ class Edit extends Component {
             <select name="albumId" value={album} onChange={this.handleInputChange}>
               <option value="">...</option>
               {albums.map((a) => (
-                <option key={a.id} value={a.name}>
+                <option key={a.id} value={a.name} selected={a.id === aid}>
                   {a.name}
                 </option>
               ))}
