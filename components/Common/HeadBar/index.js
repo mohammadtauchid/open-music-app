@@ -35,7 +35,6 @@ class HeadBar extends Component {
 
   render() {
     const { user, isOpen } = this.state;
-    console.log(user);
     return (
       <header className={styles.head_bar}>
         <div className={styles.menu_wrapper}>

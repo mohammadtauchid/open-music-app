@@ -6,9 +6,6 @@ import Songs from '../components/Songs';
 import Card from '../components/Common/Card';
 
 import styles from './Home.module.scss';
-import getBaseURL from '../lib/utils/storage';
-import fetcher from '../lib/utils/fetcher';
-import AuthenticationError from '../lib/utils/AuthenticationError';
 
 class Home extends Component {
   constructor(props) {

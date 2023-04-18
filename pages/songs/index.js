@@ -42,7 +42,6 @@ class Song extends Component {
 
   async _fetch() {
     try {
-      console.log(getBaseURL());
       const { data: { songs } } = await fetcher(`${getBaseURL()}songs`);
       this.setState(() => ({ songs, empty: songs.length < 1 }));
     } catch (error) {
@@ -78,7 +77,7 @@ class Song extends Component {
               Error displaying songs! Make sure you have done with the
               back-end or correct url.
             </p>
-          ) : <Songs empty={empty} songs={songs} />}
+          ) : <Songs empty={empty} songs={songs.reverse()} />}
         </main>
         <FloatingButton onClickHandler={onAddSongClick} icon="/icon/add.svg" text="Add Song" />
       </div>
