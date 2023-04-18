@@ -7,9 +7,9 @@ import Songs from '../components/Songs';
 import Card from '../components/Common/Card';
 
 import styles from './Home.module.scss';
-// import { getBaseURL } from '../lib/utils/storage';
-// import { fetchWithAuthentication } from '../lib/utils/fetcher';
-// import AuthenticationError from '../lib/utils/AuthenticationError';
+import { getBaseURL } from '../lib/utils/storage';
+import fetcher from '../lib/utils/fetcher';
+import AuthenticationError from '../lib/utils/AuthenticationError';
 
 // const onAddNoteClick = () => {
 //   if (window) {
@@ -42,20 +42,20 @@ class Home extends Component {
   //   await this._fetch();
   // }
 
-  // async _fetch() {
-  //   try {
-  //     const { data: { notes } } = await fetchWithAuthentication(`${getBaseURL()}notes`);
-  //     this.setState(() => ({ notes, empty: notes.length < 1 }));
-  //   } catch (error) {
-  //     if (error instanceof AuthenticationError) {
-  //       if (window) {
-  //         alert(error.message);
-  //       }
-  //       // TODO redirect to login
-  //     }
-  //     this.setState((prevState) => ({ ...prevState, isError: true }));
-  //   }
-  // }
+  async _fetch() {
+    try {
+      const { data: { notes } } = await fetcher(`${getBaseURL()}songs`);
+      this.setState(() => ({ notes, empty: notes.length < 1 }));
+    } catch (error) {
+      if (error instanceof AuthenticationError) {
+        if (window) {
+          alert(error.message);
+        }
+        // TODO redirect to login
+      }
+      this.setState((prevState) => ({ ...prevState, isError: true }));
+    }
+  }
 
   render() {
     const {

@@ -1,9 +1,9 @@
 .song_list {
   flex: 1;
   padding: 16px;
-  display: grid;
+  display: flex;
   gap: 16px;
-  grid-template-columns: 1fr;
+  flex-direction: column;
 }
 
 .empty {
@@ -15,7 +15,6 @@
     font-size: 20px;
   }
 }
-
 
 @media screen and (min-width: 600px) {
   .song_list {

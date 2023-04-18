@@ -1,59 +1,88 @@
 .song_item {
-  position: relative;
-  border: 1px solid #d6d6d6;
-  min-height: 250px;
-  border-radius: 10px;
+  background-color: none;
   padding: 16px;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   cursor: pointer;
-  transition: all .2s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
 
-  .song_item__header {
+  &__actions {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    align-self: self-start;
+  }
 
-    .song_item__title {
-      font-size: 28px;
-    }
+  &__button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    margin-left: 10px;
 
-    .song_item__date {
-      margin-top: 2px;
-      font-weight: 300;
-      font-size: 14px;
+    img {
+      border: none;
     }
   }
 
-  .song_item__content {
-    margin-top: 8px;
+  &:hover {
+    transform: scale(1.01);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__title {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+    margin-right: 10px;
+    width: 100%;
+    
     overflow: hidden;
     text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 5;
-    -webkit-box-orient: vertical;
-  }
+    white-space: nowrap;
+    flex-grow: 1;
 
-  .song_item__footer {
-    margin-top: 12px;
-    position: absolute;
-
-    bottom: 10px;
-    .song_item__tags {
-      display: flex;
-      flex-direction: row-reverse;
-      .song_item__tag {
-        padding: 4px 8px;
-        margin: 5px;
-        font-size: 14px;
-        font-weight: 300;
-        border: 1px solid #b5b5b5;
-        border-radius: 5px;
-      }
-
-      .song_item__tag:before {
-        content: '#';
-      }
+    span {
+      font-size: 16px;
+      font-weight: 400;
+      color: #666;
     }
   }
 
+  .expanded_title {
+    white-space: normal;
+    text-overflow: unset;
+  }
+
+  .content_detail {
+    font-weight: 600;
+  }
+
+  &__content {
+    font-size: 16px;
+    margin: 8px 0;
+  }
 }
 
-.song_item:hover {
-  transform: scale(1.02);
+.expanded_content {
+  margin-top: 16px;
+  padding-left: 16px;
+
+  p {
+    margin: 0;
+    font-size: 16px;
+  }
 }

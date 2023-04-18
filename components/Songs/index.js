@@ -1,5 +1,5 @@
 import React from 'react';
-import NoteItem from '../SongItem';
+import SongItem from '../SongItem';
 import styles from './Songs.module.scss';
 
 const Songs = ({ songs, empty }) => {
@@ -13,7 +13,7 @@ const Songs = ({ songs, empty }) => {
 
   return (
     <div className={styles.song_list}>
-      {songs.map((song) => <NoteItem key={song.id} note={song} />)}
+      {songs.map((song) => <SongItem key={song.id} song={song} />)}
     </div>
   );
 };
