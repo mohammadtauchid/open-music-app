@@ -1,8 +1,8 @@
-import Router from 'next/dist/next-server/server/router';
+import Router from 'next/router';
 import React, { Component } from 'react';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
 import fetcher from '../../lib/utils/fetcher';
-import { getBaseURL } from '../../lib/utils/storage';
+import getBaseURL from '../../lib/utils/storage';
 import styles from './New.module.scss';
 
 class New extends Component {
@@ -25,9 +25,16 @@ class New extends Component {
   }
 
   async componentDidMount() {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      await Router.push('/login');
+      return;
+    }
+
     try {
       const { data } = await fetcher(`${getBaseURL()}albums`);
-      this.setState({ albums: data.albums });
+      this.setState({ albums: data.albums, accessToken });
     } catch (error) {
       console.error('Error fetching albums:', error);
       this.setState({ error: error.message });
@@ -93,8 +100,14 @@ class New extends Component {
 
   render() {
     const {
-      title, performer, year, genre, duration, album, albums, error,
+      title, performer, year, genre, duration, album, albums, error, accessToken,
     } = this.state;
+
+    if (!accessToken) {
+      return (
+        <></>
+      );
+    }
 
     return (
       <div className={styles.add_song}>

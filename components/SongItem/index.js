@@ -2,7 +2,7 @@ import Router from 'next/dist/next-server/server/router';
 import React, { Component } from 'react';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
 import fetcher from '../../lib/utils/fetcher';
-import { getBaseURL } from '../../lib/utils/storage';
+import getBaseURL from '../../lib/utils/storage';
 import styles from './SongItem.module.scss';
 
 class SongItem extends Component {

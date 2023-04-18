@@ -3,7 +3,7 @@ import Link from 'next/link';
 import jwtDecode from 'jwt-decode';
 import styles from './HeadBar.module.scss';
 import fetcher from '../../../lib/utils/fetcher';
-import { getBaseURL } from '../../../lib/utils/storage';
+import getBaseURL from '../../../lib/utils/storage';
 import HamburgerMenu from '../HamburgerMenu';
 
 class HeadBar extends Component {
@@ -35,6 +35,7 @@ class HeadBar extends Component {
 
   render() {
     const { user, isOpen } = this.state;
+    console.log(user);
     return (
       <header className={styles.head_bar}>
         <div className={styles.menu_wrapper}>
@@ -52,6 +53,7 @@ class HeadBar extends Component {
             {' '}
             { user ? user.fullname : '...'}
           </p>
+          <p>|</p>
           <Link href="/logout">Logout</Link>
         </div>
       </header>

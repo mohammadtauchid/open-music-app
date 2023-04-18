@@ -1,8 +1,8 @@
-import Router from 'next/dist/next-server/server/router';
+import Router from 'next/router';
 import React, { Component } from 'react';
 import AuthenticationError from '../../../lib/utils/AuthenticationError';
-import fetcher from '../../../lib/utils/fetcher';
-import { getBaseURL } from '../../../lib/utils/storage';
+import { fetchWithAuthentication } from '../../../lib/utils/fetcher';
+import getBaseURL from '../../../lib/utils/storage';
 import styles from './Edit.module.scss';
 
 class Edit extends Component {
@@ -19,6 +19,7 @@ class Edit extends Component {
       albumId: undefined,
       albums: [],
       error: null,
+      accessToken: null,
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
@@ -26,11 +27,18 @@ class Edit extends Component {
   }
 
   async componentDidMount() {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (!accessToken) {
+      await Router.push('/login');
+      return;
+    }
+
     try {
       const { id: songId } = this.props;
-      const { data: { albums } } = await fetcher(`${getBaseURL()}albums`);
-      const { data: { song } } = await fetcher(`${getBaseURL()}songs/${songId}`);
-      this.setState({ ...song, albums });
+      const { data: { albums } } = await fetchWithAuthentication(`${getBaseURL()}albums`);
+      const { data: { song } } = await fetchWithAuthentication(`${getBaseURL()}songs/${songId}`);
+      this.setState({ ...song, albums, accessToken });
     } catch (error) {
       console.error('Error fetching albums:', error);
       this.setState({ error: error.message });
@@ -59,12 +67,16 @@ class Edit extends Component {
     event.preventDefault();
 
     const {
-      id, title, performer, year, genre, duration, albumId,
+      id, title, performer, year, genre, duration, albumId, accessToken,
     } = this.state;
-    console.log(this.state);
+
+    if (!accessToken) {
+      await Router.push('/login');
+      return;
+    }
 
     try {
-      const response = await fetcher(`${getBaseURL()}songs/${id}`, {
+      const response = await fetchWithAuthentication(`${getBaseURL()}songs/${id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -96,8 +108,14 @@ class Edit extends Component {
 
   render() {
     const {
-      title, performer, year, genre, duration, album, albums, error,
+      title, performer, year, genre, duration, album, albums, error, accessToken,
     } = this.state;
+
+    if (!accessToken) {
+      return (
+        <></>
+      );
+    }
 
     return (
       <div className={styles.edit_song}>

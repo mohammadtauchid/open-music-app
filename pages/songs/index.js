@@ -1,12 +1,12 @@
 import Head from 'next/head';
 import React, { Component } from 'react';
-// import Router from 'next/router';
+import Router from 'next/router';
 import HeadBar from '../../components/Common/HeadBar';
 import Songs from '../../components/Songs';
 import FloatingButton from '../../components/Common/FloatingButton';
 
 import styles from './Song.module.scss';
-import { getBaseURL, setBaseURL } from '../../lib/utils/storage';
+import getBaseURL from '../../lib/utils/storage';
 import fetcher from '../../lib/utils/fetcher';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
 
@@ -23,27 +23,26 @@ class Song extends Component {
       songs: [],
       empty: false,
       isError: false,
-      // accessToken: null,
+      accessToken: null,
     };
   }
 
   async componentDidMount() {
-    // const accessToken = localStorage.getItem('accessToken');
-    // if (!accessToken) {
-    //   alert('Mohon untuk login dulu.');
-    //   await Router.push('/login');
-    //   return;
-    // }
-    // this.setState((prevState) => ({
-    //   ...prevState,
-    //   accessToken,
-    // }));
+    const accessToken = localStorage.getItem('accessToken');
+    if (!accessToken) {
+      await Router.push('/login');
+      return;
+    }
+    this.setState((prevState) => ({
+      ...prevState,
+      accessToken,
+    }));
     await this._fetch();
   }
 
   async _fetch() {
     try {
-      setBaseURL();
+      console.log(getBaseURL());
       const { data: { songs } } = await fetcher(`${getBaseURL()}songs`);
       this.setState(() => ({ songs, empty: songs.length < 1 }));
     } catch (error) {
@@ -59,12 +58,12 @@ class Song extends Component {
 
   render() {
     const {
-      songs, isError, empty, // accessToken,
+      songs, isError, empty, accessToken,
     } = this.state;
 
-    // if (!accessToken) {
-    //   return <></>;
-    // }
+    if (!accessToken) {
+      return <></>;
+    }
 
     return (
       <div>
