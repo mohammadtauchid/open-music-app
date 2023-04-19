@@ -147,7 +147,7 @@ class New extends Component {
                 ))}
               </select>
             </label>
-            <button type="submit">Add Song</button>
+            <button type="submit">Submit</button>
             {error && <p className={styles.error_message}>{error}</p>}
           </form>
         </div>
