@@ -10,7 +10,7 @@ import getBaseURL from '../../lib/utils/storage';
 import fetcher from '../../lib/utils/fetcher';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
 
-const onAddSongClick = () => {
+const onAddAlbumClick = () => {
   if (window) {
     window.location.href = '/albums/new';
   }
@@ -79,7 +79,7 @@ class Album extends Component {
             </p>
           ) : <Albums empty={empty} albums={albums.reverse()} />}
         </main>
-        <FloatingButton onClickHandler={onAddSongClick} icon="/icon/add.svg" text="Add Song" />
+        <FloatingButton onClickHandler={onAddAlbumClick} icon="/icon/add.svg" text="Add Song" />
       </div>
     );
   }
