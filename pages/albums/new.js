@@ -1,8 +1,9 @@
 import Router from 'next/router';
 import React, { Component } from 'react';
+import Head from 'next/head';
 import HeadBar from '../../components/Common/HeadBar';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
-import fetcher from '../../lib/utils/fetcher';
+import { fetchWithAuthentication } from '../../lib/utils/fetcher';
 import getBaseURL from '../../lib/utils/storage';
 import styles from './New.module.scss';
 
@@ -43,7 +44,7 @@ class New extends Component {
     } = this.state;
 
     try {
-      const response = await fetcher(`${getBaseURL()}albums`, {
+      const response = await fetchWithAuthentication(`${getBaseURL()}albums`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -86,22 +87,31 @@ class New extends Component {
 
     return (
       <div>
+        <Head>
+          <title>
+            { process.env.NEXT_PUBLIC_APP_NAME || 'Music' }
+            &nbsp;Apps
+          </title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <HeadBar />
-        <div className={styles.add_album}>
-          <h1>Add Album</h1>
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="name">
-              Name
-              <input type="text" name="name" value={name} onChange={this.handleInputChange} />
-            </label>
-            <label htmlFor="year">
-              Year
-              <input type="text" name="year" value={year} onChange={this.handleInputChange} />
-            </label>
-            <button type="submit">Submit</button>
-            {error && <p className={styles.error_message}>{error}</p>}
-          </form>
-        </div>
+        <main>
+          <div className={styles.add_album}>
+            <h1>Add Album</h1>
+            <form onSubmit={this.handleSubmit}>
+              <label htmlFor="name">
+                Name
+                <input type="text" name="name" value={name} onChange={this.handleInputChange} />
+              </label>
+              <label htmlFor="year">
+                Year
+                <input type="text" name="year" value={year} onChange={this.handleInputChange} />
+              </label>
+              <button type="submit">Submit</button>
+              {error && <p className={styles.error_message}>{error}</p>}
+            </form>
+          </div>
+        </main>
       </div>
     );
   }

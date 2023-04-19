@@ -7,7 +7,7 @@ import FloatingButton from '../../components/Common/FloatingButton';
 
 import styles from './Song.module.scss';
 import getBaseURL from '../../lib/utils/storage';
-import fetcher from '../../lib/utils/fetcher';
+import { fetchWithAuthentication } from '../../lib/utils/fetcher';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
 
 const onAddSongClick = () => {
@@ -42,14 +42,14 @@ class Song extends Component {
 
   async _fetch() {
     try {
-      const { data: { songs } } = await fetcher(`${getBaseURL()}songs`);
+      const { data: { songs } } = await fetchWithAuthentication(`${getBaseURL()}songs`);
       this.setState(() => ({ songs, empty: songs.length < 1 }));
     } catch (error) {
       if (error instanceof AuthenticationError) {
         if (window) {
           alert(error.message);
         }
-        // TODO redirect to login
+        await Router.push('/login');
       }
       this.setState((prevState) => ({ ...prevState, isError: true }));
     }

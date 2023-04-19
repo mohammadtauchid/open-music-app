@@ -5,7 +5,7 @@ import fetcher from '../../lib/utils/fetcher';
 import getBaseURL from '../../lib/utils/storage';
 import styles from './AlbumItem.module.scss';
 
-class albumItem extends Component {
+class AlbumItem extends Component {
   constructor(props) {
     super(props);
 
@@ -115,4 +115,4 @@ class albumItem extends Component {
   }
 }
 
-export default albumItem;
+export default AlbumItem;

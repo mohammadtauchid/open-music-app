@@ -69,7 +69,10 @@ export default class Register extends Component {
       <div>
         <div className={style.container}>
           <Head>
-            <title>Notes Apps | Register</title>
+            <title>
+              { process.env.NEXT_PUBLIC_APP_NAME || 'Music' }
+              &nbsp;Apps&nbsp;|&nbsp;Register
+            </title>
             <link rel="icon" href="/favicon.ico" />
           </Head>
 

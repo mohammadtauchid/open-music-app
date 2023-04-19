@@ -7,7 +7,7 @@ import FloatingButton from '../../components/Common/FloatingButton';
 
 import styles from './Album.module.scss';
 import getBaseURL from '../../lib/utils/storage';
-import fetcher from '../../lib/utils/fetcher';
+import { fetchWithAuthentication } from '../../lib/utils/fetcher';
 import AuthenticationError from '../../lib/utils/AuthenticationError';
 
 const onAddAlbumClick = () => {
@@ -42,14 +42,14 @@ class Album extends Component {
 
   async _fetch() {
     try {
-      const { data: { albums } } = await fetcher(`${getBaseURL()}albums`);
+      const { data: { albums } } = await fetchWithAuthentication(`${getBaseURL()}albums`);
       this.setState(() => ({ albums, empty: albums.length < 1 }));
     } catch (error) {
       if (error instanceof AuthenticationError) {
         if (window) {
           alert(error.message);
         }
-        // TODO redirect to login
+        await Router.push('/login');
       }
       this.setState((prevState) => ({ ...prevState, isError: true }));
     }
@@ -74,7 +74,7 @@ class Album extends Component {
         <main>
           {isError ? (
             <p className={styles.error}>
-              Error displaying songs! Make sure you have done with the
+              Error displaying albums! Make sure you have done with the
               back-end or correct url.
             </p>
           ) : <Albums empty={empty} albums={albums.reverse()} />}

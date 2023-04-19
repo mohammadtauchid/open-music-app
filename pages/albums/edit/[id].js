@@ -1,5 +1,6 @@
 import Router from 'next/router';
 import React, { Component } from 'react';
+import Head from 'next/head';
 import HeadBar from '../../../components/Common/HeadBar';
 import AuthenticationError from '../../../lib/utils/AuthenticationError';
 import { fetchWithAuthentication } from '../../../lib/utils/fetcher';
@@ -101,6 +102,13 @@ class Edit extends Component {
 
     return (
       <div>
+        <Head>
+          <title>
+            { process.env.NEXT_PUBLIC_APP_NAME || 'Music' }
+            &nbsp;Apps
+          </title>
+          <link rel="icon" href="/favicon.ico" />
+        </Head>
         <HeadBar />
         <div className={styles.edit_album}>
           <h1>Edit Album</h1>
