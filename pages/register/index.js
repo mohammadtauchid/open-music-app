@@ -81,7 +81,10 @@ export default class Register extends Component {
               <h1>
                 Welcome to
                 {' '}
-                <a href="/">Notes Apps</a>
+                <a href="/">
+                  { process.env.NEXT_PUBLIC_APP_NAME || 'Music' }
+                  &nbsp;Apps
+                </a>
               </h1>
               <p>
                 Please Register to Continue
