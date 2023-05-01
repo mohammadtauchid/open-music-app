@@ -39,7 +39,10 @@ class Edit extends Component {
       const { id: songId } = this.props;
       const { data: { albums } } = await fetchWithAuthentication(`${getBaseURL()}albums`);
       const { data: { song } } = await fetchWithAuthentication(`${getBaseURL()}songs/${songId}`);
-      this.setState({ ...song, albums, accessToken });
+      this.setState({
+        ...song, albumId: song.album_id, albums, accessToken,
+      });
+      console.log(this.state);
     } catch (error) {
       console.error('Error fetching albums:', error);
       this.setState({ error: error.message });
